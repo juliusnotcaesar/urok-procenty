@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.2, user-scalable=yes">
+    <title>🧺 СОБИРАЕМ КОРЗИНУ — весёлый урок</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', 'Segoe UI', Arial, sans-serif;
+            background: #fffaf2;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 8px 12px;
+            color: #333;
+        }
+
+        .main-layout {
+            display: flex;
+            gap: 14px;
+            width: 1300px;
+            max-width: 98vw;
+            height: 100%;
+        }
+
+        /* левая колонка */
+        .left-col {
+            width: 63%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+
+        /* правая колонка */
+        .right-col {
+            width: 37%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: auto;
+        }
+
+        /* карточки */
+        .card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 12px 16px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+            border: 1px solid #ffe7c4;
+        }
+
+        .card h2 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #c44f2c;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 2px dashed #fec196;
+            padding-bottom: 5px;
+        }
+
+        .card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #b6491a;
+            margin: 10px 0 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* заголовок урока */
+        .lesson-title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #bd4b22;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #7b553a;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        .plan-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 8px 0;
+        }
+
+        .badge {
+            background: #ffedd7;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #613c1e;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .goal-box {
+            background: #fff7e9;
+            border-left: 6px solid #fba76f;
+            padding: 8px 14px;
+            border-radius: 12px;
+            margin: 8px 0;
+            font-style: italic;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .percent-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 6px 0;
+        }
+
+        .percent-badge {
+            background: #ffe7ce;
+            border-radius: 20px;
+            padding: 5px 12px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #7b3e19;
+            border: 1px solid #fec196;
+        }
+
+        .hint {
+            background: #fffef5;
+            border: 1px dashed #f9b97a;
+            border-radius: 12px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            margin-top: 8px;
+        }
+
+        /* тренировка */
+        .task-line {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+        }
+
+        .task-label {
+            min-width: 140px;
+            font-weight: 600;
+            color: #4b2e1a;
+        }
+
+        .task-input {
+            width: 60px;
+            padding: 4px 6px;
+            border: 2px solid #f8b27a;
+            border-radius: 20px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            background: white;
+        }
+
+        .btn-check {
+            background: #ffb056;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 6px rgba(255, 140, 0, 0.3);
+        }
+
+        .btn-check:hover {
+            background: #ff8c2e;
+        }
+
+        .feedback {
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin-left: 4px;
+        }
+
+        /* ПОЛКИ МАГАЗИНА */
+        .shelf-title {
+            margin-bottom: 6px;
+        }
+
+        .shelf {
+            background: #fef9e6;
+            border-radius: 16px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #ffddb0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            transition: 0.2s;
+            background: linear-gradient(to bottom, #fff6e6, #fff2db);
+            position: relative;
+        }
+
+        .shelf::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: #deb887;
+            border-radius: 0 0 16px 16px;
+            opacity: 0.5;
+        }
+
+        .product-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .product-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            width: 100px;
+            color: #613c1e;
+        }
+
+        .price-box {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 700;
+        }
+
+        .old-price {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .discount-badge {
+            background: #ff6b6b;
+            color: white;
+            border-radius: 16px;
+            padding: 2px 10px;
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        .qty-panel {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            margin-left: auto;
+        }
+
+        .qty-btn {
+            background: #ffdbb5;
+            border: none;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5e3a1a;
+            transition: 0.2s;
+        }
+
+        .qty-btn:hover {
+            background: #ffbd7a;
+        }
+
+        .qty-value {
+            min-width: 24px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .btn-add-cart {
+            background: #ffaa5e;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            box-shadow: 0 4px 8px rgba(255, 120, 0, 0.3);
+            transition: 0.2s;
+        }
+
+        .btn-add-cart:hover {
+            background: #ff8c2e;
+        }
+
+        .product-summary {
+            width: 100%;
+            font-size: 0.7rem;
+            color: #6b4b2e;
+            margin-top: 4px;
+            padding-left: 8px;
+            font-weight: 500;
+        }
+
+        /* корзина */
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+            margin-top: 6px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .cart-table th {
+            background: #fbc4a8;
+            color: #4b2c1a;
+            font-weight: 700;
+            padding: 6px 4px;
+            text-align: center;
+        }
+
+        .cart-table td {
+            padding: 5px 4px;
+            text-align: center;
+            border-bottom: 1px solid #fce2c4;
+            background: white;
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #e63946;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .delete-btn:hover {
+            color: #b00020;
+        }
+
+        .cash-box {
+            background: #fff7eb;
+            border-radius: 18px;
+            padding: 10px 14px;
+            font-weight: 600;
+            border: 1px solid #ffdbb5;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .cash-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            font-size: 0.85rem;
+        }
+
+        .cash-total {
+            font-weight: 800;
+            font-size: 1.1rem;
+            border-top: 2px solid #fab27a;
+            padding-top: 6px;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="main-layout">
+    <!-- ЛЕВАЯ КОЛОНКА -->
+    <div class="left-col">
+        <!-- Заголовок -->
+        <div class="card">
+            <div class="lesson-title">
+                <span>🧺</span> СОБИРАЕМ КОРЗИНУ
+            </div>
+            <div class="subtitle">Учимся работать с процентами в реальных покупках</div>
+            <div class="plan-badges">
+                <span class="badge">📘 1. Теория</span>
+                <span class="badge">✏️ 2. Тренируемся</span>
+                <span class="badge">🛒 3. Корзина</span>
+                <span class="badge">🧾 4. Касса</span>
+                <span class="badge">🎯 5. Практика</span>
+            </div>
+        </div>
+
+        <!-- Цель -->
+        <div class="card">
+            <div class="goal-box">
+                <strong>🎯 ЦЕЛЬ УРОКА:</strong> Научиться решать задачи на проценты в реальных ситуациях при покупках.
+            </div>
+        </div>
+
+        <!-- Теория -->
+        <div class="card">
+            <h2>📚 1. ТЕОРИЯ</h2>
+            <p style="font-weight:600;">Процент — одна сотая часть числа. <span style="background:#ffe7ce; padding:2px 10px; border-radius:16px;">1% = 1/100</span></p>
+            <div class="percent-badges">
+                <span class="percent-badge">10% = 0,1</span>
+                <span class="percent-badge">25% = 0,25</span>
+                <span class="percent-badge">50% = 0,5</span>
+                <span class="percent-badge">75% = 0,75</span>
+                <span class="percent-badge">100% = 1</span>
+            </div>
+            <div class="hint">
+                💡 <strong>Подсказка:</strong> раздели число на 100 и умножь на процент.
+            </div>
+        </div>
+
+        <!-- Тренировка -->
+        <div class="card" style="flex:1; overflow-y:auto;" id="trainingCard">
+            <h2>🧮 2. ТРЕНИРУЕМСЯ</h2>
+            <div id="trainingContent"></div>
+        </div>
+    </div>
+
+    <!-- ПРАВАЯ КОЛОНКА -->
+    <div class="right-col">
+        <!-- Список продуктов (полки) -->
+        <div class="card" style="flex:1; overflow-y:auto;">
+            <h2>🛍️ 3. ПОЛКИ МАГАЗИНА</h2>
+            <div id="shelvesContainer"></div>
+        </div>
+
+        <!-- Корзина -->
+        <div class="card" style="flex:1; overflow-y:auto;">
+            <h2>📋 ТВОЯ КОРЗИНА</h2>
+            <table class="cart-table" id="cartTable">
+                <thead>
+                <tr>
+                    <th>№</th><th>Товар</th><th>Кол</th><th>Цена</th><th>Скидка</th><th>Со скид.</th><th>Сумма</th><th></th>
+                </tr>
+                </thead>
+                <tbody id="cartBody"></tbody>
+            </table>
+        </div>
+
+        <!-- Касса -->
+        <div class="cash-box">
+            <div class="cash-row"><span>💵 Сумма без скидки:</span> <span id="totalNoDiscount">0 ₽</span></div>
+            <div class="cash-row"><span>🏷️ Скидка общая:</span> <span id="totalDiscount">0 ₽</span></div>
+            <div class="cash-row cash-total"><span>🧾 ИТОГО К ОПЛАТЕ:</span> <span id="totalToPay">0 ₽</span></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- ТОВАРЫ ----------
+        const products = [
+            { name: 'Хлеб', icon: '🍞', price: 60, discount: 10 },
+            { name: 'Молоко', icon: '🥛', price: 80, discount: 15 },
+            { name: 'Масло', icon: '🧈', price: 120, discount: 20 },
+            { name: 'Яйца (10 шт.)', icon: '🥚', price: 100, discount: 5 },
+            { name: 'Сахар (1 кг)', icon: '🍬', price: 70, discount: 0 },
+            { name: 'Вода (1,5 л)', icon: '💧', price: 50, discount: 0 },
+            { name: 'Чипсы', icon: '🥔', price: 90, discount: 10 },
+            { name: 'Сок (1 л)', icon: '🧃', price: 110, discount: 25 },
+            { name: 'Бананы (1 кг)', icon: '🍌', price: 95, discount: 0 }
+        ];
+
+        const productQtys = {};
+        products.forEach(p => productQtys[p.name] = 1);
+        let cart = [];
+
+        // ---------- ТРЕНИРОВОЧНЫЕ ЗАДАНИЯ ----------
+        const exercises = {
+            'А. Найди % от числа': [
+                { text: '20% от 250 ₽', answer: 50 },
+                { text: '15% от 600 ₽', answer: 90 },
+                { text: '50% от 1200 ₽', answer: 600 },
+                { text: '10% от 90 ₽', answer: 9 }
+            ],
+            'Б. Число по %': [
+                { text: '20% = 50 ₽', answer: 250 },
+                { text: '15% = 120 ₽', answer: 800 },
+                { text: '50% = 350 ₽', answer: 700 },
+                { text: '25% = 80 ₽', answer: 320 }
+            ],
+            'В. Сколько %?': [
+                { text: '30 от 150', answer: 20 },
+                { text: '45 от 300', answer: 15 },
+                { text: '120 от 600', answer: 20 },
+                { text: '75 от 250', answer: 30 }
+            ],
+            'Г. На сколько % >/<': [
+                { text: '150 > 100', answer: 50 },
+                { text: '80 < 100', answer: 20 },
+                { text: '250 > 200', answer: 25 },
+                { text: '90 < 120', answer: 25 }
+            ],
+            'Д. Практика': [
+                { text: 'Хлеб 60₽ +10%', answer: 66 },
+                { text: 'Молоко 80₽ -15%', answer: 68 },
+                { text: 'Масло 400₽ +20%', answer: 480 },
+                { text: 'Сок 100₽ -10%', answer: 90 }
+            ]
+        };
+
+        // ---------- ОТРИСОВКА ТРЕНИРОВКИ ----------
+        function renderTraining() {
+            const container = document.getElementById('trainingContent');
+            container.innerHTML = '';
+            Object.entries(exercises).forEach(([title, tasks]) => {
+                const h3 = document.createElement('h3');
+                h3.textContent = title;
+                container.appendChild(h3);
+                tasks.forEach((task, idx) => {
+                    const id = `task_${title.replace(/\s/g,'_')}_${idx}`;
+                    const line = document.createElement('div');
+                    line.className = 'task-line';
+                    line.innerHTML = `
+                        <span class="task-label">${task.text}</span>
+                        <input class="task-input" id="${id}" type="number" placeholder="?">
+                        <button class="btn-check" onclick="checkAnswer('${id}', ${task.answer})">✔️</button>
+                        <span class="feedback" id="${id}_fb"></span>
+                    `;
+                    container.appendChild(line);
+                });
+            });
+        }
+
+        window.checkAnswer = function(id, correct) {
+            const input = document.getElementById(id);
+            const fb = document.getElementById(id + '_fb');
+            if (!input || !fb) return;
+            const val = parseFloat(input.value.trim().replace(',', '.'));
+            if (isNaN(val)) {
+                fb.innerHTML = '❌ число?';
+                fb.style.color = '#c0392b';
+                return;
+            }
+            if (Math.abs(val - correct) < 0.001) {
+                fb.innerHTML = '✅ Верно!';
+                fb.style.color = '#27ae60';
+            } else {
+                fb.innerHTML = `❌ ответ ${correct}`;
+                fb.style.color = '#c0392b';
+            }
+        };
+
+        // ---------- ПОЛКИ ----------
+        function renderShelves() {
+            const container = document.getElementById('shelvesContainer');
+            container.innerHTML = '';
+            products.forEach(p => {
+                const qty = productQtys[p.name];
+                const discounted = Math.round(p.price * (1 - p.discount / 100));
+                const subtotal = Math.round(qty * discounted);
+
+                const shelf = document.createElement('div');
+                shelf.className = 'shelf';
+                shelf.innerHTML = `
+                    <span class="product-icon">${p.icon}</span>
+                    <span class="product-name">${p.name}</span>
+                    <span class="price-box">
+                        <span class="old-price">${p.price} ₽</span>
+                        ${p.discount > 0 ? `<span class="discount-badge">-${p.discount}%</span>` : '<span style="font-size:0.8rem;color:#888;">—</span>'}
+                    </span>
+                    <div class="qty-panel">
+                        <button class="qty-btn" onclick="changeShelfQty('${p.name.replace(/'/g, "\\'")}', -1)">−</button>
+                        <span class="qty-value" id="sqty_${p.name.replace(/\s/g,'_')}">${qty}</span>
+                        <button class="qty-btn" onclick="changeShelfQty('${p.name.replace(/'/g, "\\'")}', 1)">+</button>
+                    </div>
+                    <button class="btn-add-cart" onclick="addToCart('${p.name.replace(/'/g, "\\'")}')">🛒 В корзину</button>
+                    <div class="product-summary" id="sum_${p.name.replace(/\s/g,'_')}">
+                        Цена со скидкой: ${discounted} ₽ / Сумма: ${subtotal} ₽
+                    </div>
+                `;
+                container.appendChild(shelf);
+            });
+        }
+
+        window.changeShelfQty = function(name, delta) {
+            if (productQtys[name] === undefined) return;
+            let newQty = productQtys[name] + delta;
+            if (newQty < 1) newQty = 1;
+            if (newQty > 99) newQty = 99;
+            productQtys[name] = newQty;
+            renderShelves(); // обновить информацию
+        };
+
+        window.addToCart = function(name) {
+            const product = products.find(p => p.name === name);
+            if (!product) return;
+            const qty = productQtys[name];
+            const existing = cart.find(item => item.name === name);
+            if (existing) {
+                existing.qty += qty;
+            } else {
+                cart.push({ name: product.name, qty: qty, price: product.price, discount: product.discount });
+            }
+            productQtys[name] = 1;
+            renderShelves();
+            renderCart();
+        };
+
+        window.removeFromCart = function(index) {
+            cart.splice(index, 1);
+            renderCart();
+        };
+
+        // ---------- КОРЗИНА (5 строк) ----------
+        function renderCart() {
+            const tbody = document.getElementById('cartBody');
+            const rows = Math.max(cart.length, 5);
+            let html = '';
+            for (let i = 0; i < rows; i++) {
+                const item = cart[i] || null;
+                if (item) {
+                    const discounted = Math.round(item.price * (1 - item.discount / 100));
+                    const sum = Math.round(item.qty * discounted);
+                    html += `<tr>
+                        <td>${i+1}</td>
+                        <td style="text-align:left;">${item.name}</td>
+                        <td>${item.qty}</td>
+                        <td>${item.price} ₽</td>
+                        <td>${item.discount ? '-'+item.discount+'%' : '—'}</td>
+                        <td>${discounted} ₽</td>
+                        <td>${sum} ₽</td>
+                        <td><button class="delete-btn" onclick="removeFromCart(${i})">🗑️</button></td>
+                    </tr>`;
+                } else {
+                    html += `<tr>
+                        <td>${i+1}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    </tr>`;
+                }
+            }
+            tbody.innerHTML = html;
+            updateTotals();
+        }
+
+        function updateTotals() {
+            let totalNoDisc = 0, totalDisc = 0;
+            cart.forEach(item => {
+                const discPrice = Math.round(item.price * (1 - item.discount / 100));
+                totalNoDisc += item.qty * item.price;
+                totalDisc += item.qty * discPrice;
+            });
+            document.getElementById('totalNoDiscount').textContent = Math.round(totalNoDisc) + ' ₽';
+            document.getElementById('totalDiscount').textContent = Math.round(totalNoDisc - totalDisc) + ' ₽';
+            document.getElementById('totalToPay').textContent = Math.round(totalDisc) + ' ₽';
+        }
+
+        // старт
+        renderTraining();
+        renderShelves();
+        renderCart();
+    })();
+</script>
+</body>
+</html>
